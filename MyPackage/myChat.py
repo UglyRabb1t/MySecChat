@@ -7,15 +7,6 @@ def urlGen(src, dst):
 	return '../Public/' + src + '_to_' + dst + '.json'
 
 
-def bind(src_id, dst_id):
-	"""
-	根据源和目标 id 生成发送消息文件 .json
-	"""
-	url = urlGen(src_id, dst_id)
-	with open(url, 'w') as f:
-		json.dump(f"This is the beginning of the msg from {src_id} to {dst_id}.", f)
-
-
 class MyChat:
 	"""
 	负责通信的模块
