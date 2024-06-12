@@ -10,9 +10,9 @@ from MyPackage import MyDSA
 
 def certFGen(uid: str, userkey: tuple[str, str], cakey: tuple[str, str, str, str]):
 	"""
-	生成 `uid|n|e` 的证书
+	生成 `uid | n + e` 的证书
 	:param uid: 用户 id
-	:param userkey: 用户公钥 n|e
+	:param userkey: 用户公钥 (n, e)
 	:param cakey: CA 的 DSA 签名私钥 (g, p, q, x)
 	"""
 
