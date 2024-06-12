@@ -12,7 +12,7 @@ from MyPackage import MyDSA
 
 def main():
 	url = '.'
-	if not os.path.exists(url):
+	if not os.path.exists(rf'{url}'):
 		print("ERROR in DSA Key Gen.")
 		return
 	url = url + '/dsa_key.json'

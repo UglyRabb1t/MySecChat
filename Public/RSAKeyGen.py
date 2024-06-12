@@ -11,7 +11,7 @@ from MyPackage import MyRSA
 def main():
 	uid = input("请输入你的ID: ")
 	url = '../' + uid
-	if not os.path.exists(url):
+	if not os.path.exists(rf'{url}'):
 		print("ID不存在！\n其实这里只有 Alice 和 Bob :P")
 		return
 	url = url + '/rsa_key.json'

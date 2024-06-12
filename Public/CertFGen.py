@@ -17,7 +17,7 @@ def certFGen(uid: str, userkey: tuple[str, str], cakey: tuple[str, str, str, str
 	"""
 
 	url = '.'
-	if not os.path.exists(url):
+	if not os.path.exists(rf'{url}'):
 		print("ERROR in Certification Gen.")
 		return
 	url = url + '/' + uid + '_certF.json'
@@ -49,7 +49,7 @@ def main():
 	uid = input("请输入你的ID: ")
 	pubKeyURL = '../' + uid # 公钥证书位置
 
-	if not os.path.exists(pubKeyURL):
+	if not os.path.exists(rf'{pubKeyURL}'):
 		print("ID不存在！")
 		return
 
