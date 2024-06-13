@@ -3,14 +3,14 @@ DSA数字签名算法
 """
 import random
 
-from .myMD5 import MyMD5
-from .myRSA import Euclid_algorithm, mod_fast_pow
-from .DSAParam import DSAParam
+from MyPackage.myMD5 import MyMD5
+from MyPackage.myRSA import Euclid_algorithm, mod_fast_pow, generate_large_prime, miller_rabin_check
+from MyPackage.DSAParam import DSAParam
 
 
 pDIGITS = 512  # 参数 p 长度
 qDIGITS = 160  # 参数 q 长度
-# TIMES = 8  # 素性检验轮数
+TIMES = 8  # 素性检验轮数
 
 
 class MyDSA:
@@ -20,11 +20,18 @@ class MyDSA:
 		"""
 		生成十六进制str密钥 (p, q, g, x, y)
 		"""
-		p, q, g = DSAParam(p_digit, q_digit)
-		p = int(p, 16)
-		q = int(q, 16)
-		g = int(g, 16)
-	# 	while True:
+		# p, q, g = DSAParam(p_digit, q_digit)  # 使用 OpenSSL 库
+		# p = int(p, 16)
+		# q = int(q, 16)
+		# g = int(g, 16)
+
+	# 手动生成
+		while True:
+			q = generate_large_prime(q_digit)
+			t = 2 * random.randint(2 ** (p_digit - q_digit - 1) - 1, 2 ** (p_digit - q_digit))
+			p = q * t + 1
+			if miller_rabin_check(p, TIMES):
+				break
 	# 		counter = 0
 	# 		q = generate_large_prime(q_digit)
 	# 		while True:
@@ -38,16 +45,15 @@ class MyDSA:
 	#
 	# 		if counter == -1:
 	# 			break
-	#
-	# 	print("p:{0}\nq:{0}".format(p, q))
-	#
-	# 	while True:
-	# 		h = random.randint(2, p-2)
-	# 		g = mod_fast_pow(h, (p-1 // q), p)
-	# 		if mod_fast_pow(g, q, p) == 1:  # h 是 mod p 原根
-	# 			break
-	# 	print("h:{0}\ng:{0}".format(h, g))
-	#
+	# 	print("p:{0}\nq:{1}".format(p, q))
+
+		while True:
+			h = random.randint(2, p-2)
+			g = mod_fast_pow(h, t, p)
+			if g > 1:  # h 是 mod p 原根(不过这个检验并不确定性)
+				break
+		# print("h:{0}\ng:{1}".format(h, g))
+
 		x = random.randint(1, q-1)  # 私钥
 		y = mod_fast_pow(g, x, p)  # 公钥
 		# print("x:{0}\ny:{0}".format(x, y))

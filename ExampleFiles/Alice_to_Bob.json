@@ -1,0 +1,8 @@
+[
+    "This is the beginning of the msg from Alice to Bob.",
+    {
+        "id": -1,
+        "type": "CERT",
+        "cert": "../Public/Alice_certF.json"
+    }
+]
