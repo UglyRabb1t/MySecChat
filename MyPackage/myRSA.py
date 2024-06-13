@@ -180,30 +180,32 @@ class MyRSA:
 		return n, e, d
 
 	@staticmethod
-	def RSA_Enc(n: int, e: int, msg: str, code: str):
+	def RSA_Enc(n: int, e: int, msg: bytes, code='utf-8'):
 		"""
 		:param n: 模数
 		:param e: 公钥
-		:param msg: 消息
+		:param msg: bytes 消息
 		:param code: 编码方式
 		:return: 整型密文
 		"""
-		int_msg = int.from_bytes(msg.encode(code), 'little')
+		int_msg = int.from_bytes(msg, 'little')
 		cipher = mod_fast_pow(int_msg, e, n)
 		return cipher
 
 	@staticmethod
-	def RSA_Dec(n: int, d: int, cipher: int, code: str):
+	def RSA_Dec(n: int, d: int, cipher: int, code='utf-8'):
 		"""
 		:param n: 模数
 		:param d: 私钥
 		:param cipher: 密文
 		:param code: 编码方式
-		:return: (utf-8 字符串明文， 整型明文)
+		:return: 整型明文
 		"""
 		dec = mod_fast_pow(cipher, d, n)
-		utf8dec = dec.to_bytes((dec.bit_length() + 7) // 8, 'little').decode(code)
-		return utf8dec, dec
+		# utf8dec = dec.to_bytes((dec.bit_length() + 7) // 8, 'little').decode(code, errors='replace')
+		# return utf8dec, dec
+		return dec
+
 
 def RSA():
 	n, e, d = MyRSA.RSA_init()
