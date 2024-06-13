@@ -2,4 +2,5 @@ from MyPackage import MyChat
 
 obj = MyChat("Bob", "Alice")
 
-obj.chatStart()
+if obj.chatStart() is True:
+	obj.msgStart()
